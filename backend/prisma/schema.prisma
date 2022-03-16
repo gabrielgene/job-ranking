@@ -13,40 +13,12 @@ model User {
     email    String @unique
     password String
     type     String
-
-    junior  Junior?
-    company Company?
-    senior  Senior?
-}
-
-model Junior {
-    id String @id @default(uuid())
-
-    name   String
-    bio    String
-    user   User   @relation(fields: [userId], references: [id])
-    userId String @unique
+    name     String
+    bio      String
+    status   String @default("PENDING")
 
     ratings Rating[]
-}
 
-model Senior {
-    id     String   @id @default(uuid())
-    name   String
-    bio    String
-    user   User     @relation(fields: [userId], references: [id])
-    userId String   @unique
-    Rating Rating[]
-}
-
-model Company {
-    id     String @id @default(uuid())
-    name   String
-    bio    String
-    status String @default("PENDING")
-
-    user   User   @relation(fields: [userId], references: [id])
-    userId String @unique
 }
 
 model Rating {
@@ -55,9 +27,8 @@ model Rating {
     content   String?
     score     Int      @default(0)
 
-    owner   Senior? @relation(fields: [ownerId], references: [id])
     ownerId String?
 
-    junior   Junior? @relation(fields: [juniorId], references: [id])
-    juniorId String?
+    user   User?   @relation(fields: [userId], references: [id])
+    userId String?
 }

@@ -1,51 +1,48 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const data = [
+const users = [
   {
     email: 'junior@gmail.com',
     password: '123',
     type: 'JUNIOR',
-    junior: {
-      create: {
-        name: 'Junior name',
-        bio: 'Junior bio',
-      },
+    name: 'Junior name',
+    bio: 'Junior bio',
+    ratings: {
+      create: [
+        { content: 'Test 1', score: 10 },
+        { content: 'Test 2', score: 20 },
+        { content: 'Test 3', score: 20 },
+      ],
     },
   },
   {
     email: 'senior@gmail.com',
     password: '123',
     type: 'SENIOR',
-    senior: {
-      create: {
-        name: 'Senior name',
-        bio: 'Senior bio',
-      },
-    },
+    name: 'Senior name',
+    bio: 'Senior bio',
   },
+
   {
     email: 'company@gmail.com',
     password: '123',
     type: 'COMPANY',
-    company: {
-      create: {
-        name: 'Company name',
-        bio: 'Company bio',
-      },
-    },
+    name: 'Company name',
+    bio: 'Company bio',
   },
 ]
 
 async function main() {
   console.log(`Start seeding ...`)
-  for (const d of data) {
-    const user = await prisma.user.create({
-      data: d,
+
+  users.forEach(async (u) => {
+    await prisma.user.create({
+      data: u,
     })
-    console.log(`Created user with id: ${user.id}`)
-  }
+  })
+
   console.log(`Seeding finished.`)
 }
 

@@ -9,7 +9,8 @@ export interface Context {
 const prisma = new PrismaClient()
 
 export function user(req) {
-  const token = req.headers.authorization || 'foi'
+  const token = req.headers.authorization || ''
+  return token
   let userId
   if (token) {
     userId = decodeToken(token)

@@ -3,7 +3,7 @@ import { resolvers } from './resolvers'
 
 const typeDefs = `
 
-input CreateJuniorUserInput {
+input CreateUserInput {
   email: String!
   password: String!
   type: String!
@@ -11,15 +11,23 @@ input CreateJuniorUserInput {
   bio: String!
 }
 
+input CreateRatingInput {
+  ownerId: String!
+  userId: String!
+  content: String!
+  score: Int!
+}
+
 type Mutation {
-  createJunior(data: CreateJuniorUserInput!): User!
   login(email: String!, pass: String!): Auth
+  createRating(data: CreateRatingInput!): Rating!
+  createUser(data: CreateUserInput!): User!
 }
 
 type Query {
-  allUsers(type: String): [User!]!
+  allUsers: [User!]!
+  me: User
 }
-
 
 enum SortOrder {
   asc
@@ -33,37 +41,19 @@ type Auth {
 
 type User {
   id: String
-  email: String!
+  email: String
   password: String
   type: String
-  junior: Junior
-  company: Company
-  senior: Senior
-}
-
-type Junior {
-  id: String!
   name: String
   bio: String
+  ratings: [Rating]
 }
 
-type Senior {
-  id: Int!
-  name: String
-  bio: String
-}
-
-type Company {
-  id: Int!
-  name: String
-  bio: String
-  status: String
-}
-
-
-input UserUniqueInput {
-  email: String
-  id: Int
+type Rating {
+  id: String
+  content: String
+  score: Int
+  owner: User
 }
 
 scalar DateTime
