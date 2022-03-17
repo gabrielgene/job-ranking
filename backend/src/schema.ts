@@ -25,7 +25,9 @@ type Mutation {
 }
 
 type Query {
-  allUsers: [User!]!
+  users: [User!]!
+  juniors: [User!]!
+  user(userId: String!): User
   me: User
 }
 
@@ -42,11 +44,13 @@ type Auth {
 type User {
   id: String
   email: String
-  password: String
   type: String
   name: String
+  username: String
+  occupation: String
   bio: String
   ratings: [Rating]
+  preferences: [Preference]
 }
 
 type Rating {
@@ -54,6 +58,11 @@ type Rating {
   content: String
   score: Int
   owner: User
+}
+
+type Preference {
+  id: String
+  name: String
 }
 
 scalar DateTime

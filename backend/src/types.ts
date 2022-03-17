@@ -3,7 +3,10 @@ export interface UserInput {
   password: string
   type: string
   name: string
+  username: string
   bio: string
+  occupation: string
+  preferences: string[]
 }
 
 export interface RatingInput {

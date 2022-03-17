@@ -2,11 +2,25 @@ import { Context } from '../context'
 import { UserInput } from '../types'
 
 export const userQueries = {
-  allUsers: (_parent, _args, context: Context) => {
+  users: (_parent, _args, context: Context) => {
     return context.prisma.user.findMany()
+  },
+  juniors: async (_parent, _args, context: Context) => {
+    const user = await context.prisma.user.findUnique({
+      where: { id: context.userId },
+    })
+    if (!user) {
+      throw new Error('user_unlogged')
+    }
+    return context.prisma.user.findMany({
+      where: { occupation: user.occupation, type: 'JUNIOR' },
+    })
   },
   me: (_parent, _args, context: Context) => {
     return context.prisma.user.findUnique({ where: { id: context.userId } })
+  },
+  user: (_parent, _args, context: Context) => {
+    return context.prisma.user.findUnique({ where: { id: _args.userId } })
   },
 }
 
@@ -28,16 +42,10 @@ export const userMutations = {
     }
   },
   createUser: async (_, args: { data: UserInput }, context: Context) => {
-    const { email, password, type, name, bio } = args.data
+    const { data } = args
 
     const user = await context.prisma.user.create({
-      data: {
-        email,
-        password,
-        type,
-        name,
-        bio,
-      },
+      data,
     })
 
     return user
@@ -46,7 +54,20 @@ export const userMutations = {
 
 export const userResolvers = {
   ratings: (_parent, _args, context: Context) => {
-    return context.prisma.rating.findMany({
+    if (_parent.type === 'SENIOR') {
+      return context.prisma.rating.findMany({
+        where: { ownerId: _parent.id || undefined },
+      })
+    }
+    if (_parent.type === 'JUNIOR') {
+      return context.prisma.rating.findMany({
+        where: { userId: _parent.id || undefined },
+      })
+    }
+    return []
+  },
+  preferences: (_parent, _args, context: Context) => {
+    return context.prisma.preferences.findMany({
       where: { userId: _parent.id || undefined },
     })
   },

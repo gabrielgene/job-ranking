@@ -4,33 +4,81 @@ const prisma = new PrismaClient()
 
 const users = [
   {
-    email: 'junior@gmail.com',
+    email: 'dev1@gmail.com',
     password: '123',
     type: 'JUNIOR',
-    name: 'Junior name',
-    bio: 'Junior bio',
-    ratings: {
+    name: 'Dev 1',
+    username: 'dev2',
+    bio: 'Ola sou Dev1',
+    occupation: 'DEV',
+    preferences: {
       create: [
-        { content: 'Test 1', score: 10 },
-        { content: 'Test 2', score: 20 },
-        { content: 'Test 3', score: 20 },
+        { name: 'React' },
+        { name: 'Frontend' },
+        { name: 'Css' },
+        { name: 'Javascript' },
       ],
     },
   },
   {
-    email: 'senior@gmail.com',
+    email: 'dev2@gmail.com',
+    password: '123',
+    type: 'JUNIOR',
+    name: 'Dev 2',
+    username: 'dev1',
+    bio: 'Ola sou Dev2',
+    occupation: 'DEV',
+    preferences: {
+      create: [
+        { name: 'React' },
+        { name: 'Frontend' },
+        { name: 'Css' },
+        { name: 'Javascript' },
+      ],
+    },
+  },
+  {
+    email: 'juli@gmail.com',
+    password: '123',
+    type: 'JUNIOR',
+    name: 'Juliana',
+    username: 'julijennifer',
+    bio: 'Ola sou Juliana',
+    occupation: 'DESIGNER',
+    preferences: {
+      create: [
+        { name: 'UI/UX' },
+        { name: 'Animações' },
+        { name: 'Ilustração' },
+      ],
+    },
+  },
+  {
+    email: 'seniords@gmail.com',
     password: '123',
     type: 'SENIOR',
     name: 'Senior name',
-    bio: 'Senior bio',
+    username: 'senior_designer',
+    bio: 'Senior Desginer bio',
+    occupation: 'DESIGNER',
   },
-
+  {
+    email: 'seniordev@gmail.com',
+    password: '123',
+    type: 'SENIOR',
+    name: 'Senior name',
+    username: 'senior_dev',
+    bio: 'Senior Dev bio',
+    occupation: 'DEV',
+  },
   {
     email: 'company@gmail.com',
     password: '123',
     type: 'COMPANY',
     name: 'Company name',
+    username: 'company',
     bio: 'Company bio',
+    occupation: 'COMPANY',
   },
 ]
 
